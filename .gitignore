@@ -1,2 +1,3 @@
 .idea
-volumes/mysql
+docker-compose.yml
+.env
