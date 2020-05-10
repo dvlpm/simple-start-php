@@ -1,0 +1,27 @@
+version: '3'
+services:
+    postgres-test:
+        image: postgres:12-alpine
+        ports:
+            - ${POSTGRES_TEST_PORT}:5432
+        volumes:
+            - pgdata-test:/var/lib/postgresql/data/pgdata
+        environment:
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+            - POSTGRES_DB=${DATABASE_NAME}
+    php:
+        environment:
+            APP_ENV: test
+
+    wiremock:
+        image: rodolpheche/wiremock:latest
+        ports:
+            - 8888:8080
+        environment:
+            - TZ=Europe/Moscow
+        command: "--global-response-templating"
+
+volumes:
+    pgdata-test:
